@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basel Region Climate & Sponge City Initiatives</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom Styling -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8faf9;
+            color: #1e293b;
+        }
+        
+        .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Glassmorphism Card Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        .glass-card:hover {
+            box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Map Pin Pulse */
+        @keyframes pinPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .map-pin-active {
+            animation: pinPulse 2s infinite ease-in-out;
+            fill: #059669 !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                    <i class="fa-solid font-bold fa-droplet text-teal-200"></i>
+                </div>
+                <div>
+                    <h1 class="font-heading font-bold text-slate-900 text-lg sm:text-xl leading-tight">Basel Climate & Sponge Platform</h1>
+                    <p class="text-xs text-slate-500 hidden sm:block">Real-World Urban Heat & Stormwater Initiatives</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <a href="#map-section" class="text-xs sm:text-sm font-medium text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg border border-emerald-200/60 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Interactive Map</span>
+                </a>
+                <a href="https://map.geo.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs sm:text-sm font-medium text-slate-600 hover:text-emerald-600 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-emerald-300 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span class="hidden md:inline">MapBS Geoportal</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-b from-emerald-900 via-teal-900 to-slate-900 text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <!-- Abstract Water Pattern Background Overlay -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs sm:text-sm font-medium border border-emerald-500/30 mb-4">
+                <i class="fa-solid fa-leaf text-xs"></i>
+                <span>Soak Up the Rain • Sweat Out the Heat</span>
+            </div>
+            <h2 class="text-3xl sm:text-5xl font-heading font-bold tracking-tight mb-4 text-balance">
+                Climate Adaptation & Sponge City Initiatives in & around Basel
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-lg max-w-2xl mx-auto mb-8 font-light">
+                Discover the real-world programs, municipal mandates, and cross-border projects transforming Basel-Stadt, Basel-Landschaft, Riehen, and Freiburg into resilient Sponge Cities.
+            </p>
+
+            <!-- Quick Metrics Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto text-left">
+                <div class="bg-white/10 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4">
+                    <div class="text-xs text-emerald-300 font-medium">Core Strategy</div>
+                    <div class="text-lg font-bold text-white font-heading">Stadtklimakonzept</div>
+                    <div class="text-[11px] text-slate-300">Basel-Stadt 2021 Plan</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4">
+                    <div class="text-xs text-emerald-300 font-medium">Pioneer Sponge Site</div>
+                    <div class="text-lg font-bold text-white font-heading">VoltaNord</div>
+                    <div class="text-[11px] text-slate-300">First integrated design</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4">
+                    <div class="text-xs text-emerald-300 font-medium">Regional Funding</div>
+                    <div class="text-lg font-bold text-white font-heading">CHF 100,000</div>
+                    <div class="text-[11px] text-slate-300">Vertical Greenery Grant</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur border border-white/10 rounded-xl p-3 sm:p-4">
+                    <div class="text-xs text-emerald-300 font-medium">Cross-Border</div>
+                    <div class="text-lg font-bold text-white font-heading">Freiburg i.Br.</div>
+                    <div class="text-[11px] text-slate-300">Mandatory Rain Split</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Visualizer Section -->
+    <section id="map-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-4 sm:p-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <div>
+                    <h3 class="font-heading font-bold text-slate-900 text-xl flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot text-emerald-600"></i>
+                        <span>Regional Sponge Initiative Map</span>
+                    </h3>
+                    <p class="text-xs sm:text-sm text-slate-500">Click any hotspot to highlight matching initiatives below</p>
+                </div>
+                <button id="reset-map-btn" class="self-start md:self-auto text-xs text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                </button>
+            </div>
+
+            <!-- SVG Map Container -->
+            <div class="relative w-full h-[320px] sm:h-[420px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 flex items-center justify-center">
+                <!-- Map Background Grid -->
+                <div class="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+                
+                <!-- Stylized Map SVG -->
+                <svg id="basel-svg-map" class="w-full h-full p-2" viewBox="0 0 1000 650" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Rhine River Vector -->
+                    <path d="M 150 550 Q 300 480 400 380 Q 450 320 480 280 Q 520 220 520 80 Q 520 20 530 0" fill="none" stroke="#0284c7" stroke-width="28" stroke-linecap="round" opacity="0.8"/>
+                    <path d="M 150 550 Q 300 480 400 380 Q 450 320 480 280 Q 520 220 520 80 Q 520 20 530 0" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" opacity="0.9"/>
+                    
+                    <!-- Region Boundary Outlines (Stylized) -->
+                    <!-- Basel-Stadt Border -->
+                    <path d="M 320 180 C 350 160 420 150 500 160 C 580 170 650 220 620 320 C 590 400 480 440 380 430 C 300 420 280 300 320 180 Z" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="6,4" opacity="0.5"/>
+                    <text x="350" y="210" fill="#059669" font-size="14" font-weight="bold" opacity="0.6">BASEL-STADT</text>
+                    
+                    <!-- Riehen -->
+                    <path d="M 520 80 C 560 60 640 70 670 120 C 700 180 620 210 550 180 Z" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.4"/>
+                    <text x="580" y="120" fill="#10b981" font-size="12" font-weight="bold" opacity="0.7">RIEHEN</text>
+                    
+                    <!-- Allschwil / BL -->
+                    <text x="200" y="380" fill="#0d9488" font-size="13" font-weight="bold" opacity="0.6">ALLSCHWIL (BL)</text>
+                    
+                    <!-- Freiburg -->
+                    <text x="800" y="90" fill="#6366f1" font-size="14" font-weight="bold" opacity="0.8">FREIBURG i.Br. (DE)</text>
+                    <path d="M 780 40 L 920 40 L 920 140 L 780 140 Z" fill="none" stroke="#6366f1" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+                    <!-- Hotspot Markers -->
+                    <!-- 1. VoltaNord -->
+                    <g class="map-hotspot cursor-pointer group" data-location="VoltaNord" transform="translate(410, 240)">
+                        <circle r="18" fill="#10b981" fill-opacity="0.2" class="animate-ping"/>
+                        <circle r="10" fill="#10b981" stroke="#ffffff" stroke-width="2.5" class="transition group-hover:scale-125"/>
+                        <text x="16" y="4" fill="#ffffff" font-size="12" font-weight="bold" class="drop-shadow-md">VoltaNord</text>
+                    </g>
+
+                    <!-- 2. Erlenmatt -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Erlenmatt" transform="translate(510, 210)">
+                        <circle r="8" fill="#0d9488" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="14" y="4" fill="#e2e8f0" font-size="11" font-weight="semibold">Erlenmatt «Im Triangel»</text>
+                    </g>
+
+                    <!-- 3. St. Johann -->
+                    <g class="map-hotspot cursor-pointer group" data-location="St. Johann" transform="translate(380, 270)">
+                        <circle r="8" fill="#10b981" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="-70" y="4" fill="#e2e8f0" font-size="11">St. Johann</text>
+                    </g>
+
+                    <!-- 4. Gundeldingen -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Gundeldingen" transform="translate(440, 390)">
+                        <circle r="9" fill="#10b981" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="14" y="4" fill="#ffffff" font-size="12" font-weight="bold">Gundeldingen</text>
+                    </g>
+
+                    <!-- 5. Wettsteinallee -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Wettsteinallee" transform="translate(540, 290)">
+                        <circle r="7" fill="#059669" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="12" y="4" fill="#e2e8f0" font-size="11">Wettsteinallee</text>
+                    </g>
+
+                    <!-- 6. Riehen -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Riehen" transform="translate(610, 130)">
+                        <circle r="9" fill="#059669" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="14" y="4" fill="#ffffff" font-size="12" font-weight="bold">Riehen</text>
+                    </g>
+
+                    <!-- 7. Allschwil -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Allschwil" transform="translate(250, 360)">
+                        <circle r="9" fill="#0d9488" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="-60" y="4" fill="#ffffff" font-size="12" font-weight="bold">Allschwil</text>
+                    </g>
+
+                    <!-- 8. Freiburg -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Freiburg" transform="translate(840, 80)">
+                        <circle r="10" fill="#6366f1" stroke="#ffffff" stroke-width="2" class="transition group-hover:scale-125"/>
+                        <text x="-80" y="4" fill="#ffffff" font-size="12" font-weight="bold">Freiburg i.Br.</text>
+                    </g>
+                    
+                    <!-- 9. Klybeck / Matthäus -->
+                    <g class="map-hotspot cursor-pointer group" data-location="Klybeck" transform="translate(460, 180)">
+                        <circle r="7" fill="#10b981" stroke="#ffffff" stroke-width="1.5" class="transition group-hover:scale-125"/>
+                        <text x="12" y="4" fill="#cbd5e1" font-size="10">Klybeck & Matthäus</text>
+                    </g>
+                </svg>
+
+                <!-- Legend Overlay -->
+                <div class="absolute bottom-3 left-3 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-lg p-2.5 text-[11px] text-slate-300 flex flex-wrap gap-x-4 gap-y-1">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Basel-Stadt
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-teal-600 inline-block"></span> Basel-Landschaft (BL)
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 inline-block"></span> Cross-Border (DE)
+                    </div>
+                    <div class="flex items-center gap-1.5 text-sky-400">
+                        <i class="fa-solid fa-water text-[10px]"></i> Rhine River
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter & Search Controls Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+            
+            <!-- Category & Region Pills -->
+            <div class="flex flex-wrap items-center gap-2" id="filter-pills">
+                <button data-filter="all" class="filter-btn active text-xs sm:text-sm font-semibold px-4 py-2 rounded-xl bg-emerald-600 text-white transition shadow-sm">
+                    All Initiatives (<span id="count-all">11</span>)
+                </button>
+                <button data-filter="bs" class="filter-btn text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">
+                    <i class="fa-solid fa-city text-emerald-600 mr-1"></i> Basel-Stadt
+                </button>
+                <button data-filter="agglo" class="filter-btn text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">
+                    <i class="fa-solid fa-tree text-teal-600 mr-1"></i> Riehen & BL
+                </button>
+                <button data-filter="crossborder" class="filter-btn text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">
+                    <i class="fa-solid fa-globe text-indigo-600 mr-1"></i> Cross-Border
+                </button>
+                <div class="h-6 w-px bg-slate-300 hidden sm:block mx-1"></div>
+                <button data-filter="sponge" class="filter-btn text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">
+                    <i class="fa-solid fa-droplet text-sky-500 mr-1"></i> Sponge Projects
+                </button>
+                <button data-filter="greenery" class="filter-btn text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 transition">
+                    <i class="fa-solid fa-seedling text-emerald-500 mr-1"></i> Roofs & Facades
+                </button>
+            </div>
+
+            <!-- Search Input Box -->
+            <div class="relative w-full lg:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="search-input" placeholder="Search by street, zone, program..." 
+                    class="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition">
+                <button id="clear-search" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Initiatives Cards Grid -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow">
+        
+        <!-- Active Filter Status Bar -->
+        <div class="mb-6 flex items-center justify-between text-xs text-slate-500">
+            <div>
+                Showing <span id="visible-count" class="font-bold text-slate-800">11</span> of 11 verified programmes
+            </div>
+            <div id="active-tag-indicator" class="hidden text-emerald-700 font-medium">
+                Filtered by map hotspot: <span id="active-location-name" class="underline"></span>
+            </div>
+        </div>
+
+        <!-- Cards Layout -->
+        <div id="initiatives-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <!-- Card 1: Stadtklimakonzept -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="policy" data-locations="Inner City, St. Johann, Gundeldingen, Matthäus, Klybeck">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800">
+                            Basel-Stadt • Policy
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Adopted 2021</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2 group-hover:text-emerald-700">
+                        Stadtklimakonzept
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Basel-Stadt's comprehensive plan for a cooler, more breathable city. Pushes aggressive tree canopy growth, artificial shade, unsealing ground, and protecting vital cold-air ventilation corridors (*Kaltluftschneisen*).
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4">
+                        <span class="text-xs font-semibold text-slate-700 block mb-1">
+                            <i class="fa-solid fa-location-dot text-emerald-600 mr-1"></i> Priority Focus Zones:
+                        </span>
+                        <div class="flex flex-wrap gap-1.5 text-xs text-slate-600">
+                            <span class="bg-white px-2 py-0.5 rounded border border-slate-200">Inner City</span>
+                            <span class="bg-white px-2 py-0.5 rounded border border-slate-200">St. Johann</span>
+                            <span class="bg-white px-2 py-0.5 rounded border border-slate-200">Gundeldingen</span>
+                            <span class="bg-white px-2 py-0.5 rounded border border-slate-200">Matthäus</span>
+                            <span class="bg-white px-2 py-0.5 rounded border border-slate-200">Klybeck</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Analysis & Masterplan</span>
+                    <a href="https://www.stadtgärtnerei.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Portal (bs.ch)</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 2: Schwammstadt Basel -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="sponge" data-locations="VoltaNord, Erlenmatt">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-sky-100 text-sky-800">
+                            Basel-Stadt • Sponge Design
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Active Pilots</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Schwammstadt Basel
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        The core urban sponge principle: keep rain local so it soaks into deep soil, evaporates to cool ambient air, or is stored for reuse during drought. <strong>VoltaNord</strong> was named the first area comprehensively designed this way, following early unsealing at <strong>Erlenmatt «Im Triangel»</strong>.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4">
+                        <span class="text-xs font-semibold text-slate-700 block mb-1">
+                            <i class="fa-solid fa-vial-circle-check text-sky-600 mr-1"></i> Key Sites:
+                        </span>
+                        <p class="text-xs text-slate-600">
+                            VoltaNord (Infiltration trenches + Biochar) & Erlenmatt «Im Triangel»
+                        </p>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Urban Development</span>
+                    <a href="https://map.geo.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>MapBS Surface Runoff</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 3: Grüne Zukunft -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="sponge" data-locations="Therwilerstrasse, Paulusgasse, Wettsteinallee">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-teal-100 text-teal-800">
+                            Basel-Stadt • Combined Works
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Infrastructure</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Grüne Zukunft
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Unsealing asphalt and tree planting bundled directly with IWB utility extensions for district heating. Coordinates street Digging with street Greenery.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 space-y-1 text-xs text-slate-600">
+                        <div><strong>Therwilerstrasse & Paulusgasse:</strong> Converting asphalt to sponge beds.</div>
+                        <div><strong>Wettsteinallee:</strong> Gaining 10 new shade trees and permeable grass-joint parking slots.</div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">IWB & Civil Engineering</span>
+                    <a href="https://www.tiefbauamt.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Tiefbauamt BS</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 4: Grüne Dächer für Basel -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="greenery" data-locations="Basel-Stadt Wide">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800">
+                            Basel-Stadt • Building Law
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Mandatory</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Grüne Dächer für Basel
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Municipal ordinance requiring all unused flat roofs on new builds and major renovations to be planted with greenery. Requires deeper substrate layers to store maximum rainwater and throttled drainage outlets to prevent storm surge flooding.
+                    </p>
+                    <div class="bg-emerald-50/60 rounded-xl p-3 border border-emerald-100 mb-4 text-xs text-emerald-900">
+                        <i class="fa-solid fa-cloud-rain text-emerald-600 mr-1"></i> Retains peak storm runoff while providing biodiversity habitats across rooftop corridors.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Green Roof Mandate</span>
+                    <a href="https://www.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Baugesetz Regulations</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 5: Fassadenbegrünung auf Allmend -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="greenery" data-locations="Basel-Stadt Wide">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800">
+                            Basel-Stadt • Permit Policy
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Free Permit</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Fassadenbegrünung auf Allmend
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Allows private property owners to plant climbing greenery along their building facades even when the planter base rests on public pavement (*Allmend*). 
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-circle-check text-emerald-600 mr-1"></i> Process streamlined via simplified application; the permit is entirely free of administrative charge.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Public Space Office</span>
+                    <a href="https://www.allmend.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Allmend BS Info</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 6: Förderprogramm für private Kleinbegrünungen -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="grant" data-locations="Basel-Stadt Wide">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-amber-100 text-amber-900">
+                            Basel-Stadt • Grant Program
+                        </span>
+                        <span class="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Pending Vote</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Förderprogramm Kleinbegrünungen
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Announced in 2025 to offer direct cash subsidies for private property owners planting trees, unsealing paved yards, greening flat roofs, or installing vegetated facades.
+                    </p>
+                    <div class="bg-amber-50/80 rounded-xl p-3 border border-amber-200 mb-4 text-xs text-amber-900">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1"></i> Note: Full launch targeted for 2026 subject to upcoming parliamentary approval.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Private Subsidies</span>
+                    <a href="https://www.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Grand Council Tracker</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 7: Basel wächst in die Höhe -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="bs" data-type="grant" data-locations="Regional Basel Area">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800">
+                            Regional • Association
+                        </span>
+                        <span class="text-xs font-semibold text-emerald-700">CHF 100,000 Grant</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Basel wächst in die Höhe
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        A regional association project awarded CHF 100,000 in funding (March 2026 through end of 2029). Focuses on community outreach, expert consultation, and architectural planning for rooftop and wall greening.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-calendar-days text-emerald-600 mr-1"></i> Timeline: March 2026 – December 2029
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Vertical Greening Outreach</span>
+                    <a href="https://www.bs.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>Project Overview</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 8: Klimakonzept Riehen -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="agglo" data-type="policy" data-locations="Riehen">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-teal-100 text-teal-800">
+                            Riehen • Municipal Strategy
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Adopted Feb 2024</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Klimakonzept Riehen
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Formally adopted in February 2024. Tackles extreme summer heat and torrential downpours using integrated sponge city concepts—storing surface rainwater in natural basins to nourish municipal greenery during heatwaves.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-shield-halved text-teal-600 mr-1"></i> Dual Protection: Microclimate evaporation cooling + rainwater retention basins.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Gemeinde Riehen</span>
+                    <a href="https://www.riehen.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>riehen.ch</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 9: Mein Baum, dein Baum -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="agglo" data-type="grant" data-locations="Allschwil, Basel-Stadt">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-emerald-100 text-emerald-800">
+                            Allschwil (BL) • Pilot
+                        </span>
+                        <span class="text-xs font-semibold text-emerald-700">Aug 2026 Expansion</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Mein Baum, dein Baum
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Community pilot planting large shade trees in private front gardens. Modelled directly after Basel's earlier scheme, which successfully planted ~200 private shade trees to combat neighborhood heat islands.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-tree text-emerald-600 mr-1"></i> Impact: 200+ trees added to urban canopy across private property borders.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Gemeinde Allschwil</span>
+                    <a href="https://www.allschwil.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>allschwil.ch</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 10: Klimaanpassung Basel-Landschaft -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="agglo" data-type="policy" data-locations="Basel-Landschaft Wide">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-teal-100 text-teal-800">
+                            Canton BL • Cantonal Program
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Cantonal Framework</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Klimaanpassung Basel-Landschaft
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Canton Basel-Landschaft's umbrella adaptation program featuring targeted heat action plans, technical guidance for suburban municipalities, and systematic spot checks for rainwater retention capacity.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-clipboard-check text-teal-600 mr-1"></i> Municipal Guidance + Topographical Heavy Rain Analysis.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Kanton Basel-Landschaft</span>
+                    <a href="https://www.baselland.ch" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>baselland.ch</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Card 11: Freiburg Klimaanpassungskonzept Regenwasser -->
+            <article class="initiative-card glass-card rounded-2xl p-6 flex flex-col justify-between transition-all duration-300"
+                data-region="crossborder" data-type="policy" data-locations="Freiburg im Breisgau">
+                <div>
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <span class="px-2.5 py-1 rounded-md text-[11px] font-bold tracking-wide uppercase bg-indigo-100 text-indigo-800">
+                            Cross-Border (DE) • Municipal Mandate
+                        </span>
+                        <span class="text-xs font-semibold text-slate-400">Passed March 2024</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-slate-900 mb-2">
+                        Freiburg Rainwater Concept
+                    </h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Neighboring Freiburg's *Klimaanpassungskonzept Regenwasser*. Differentiates ordinary precipitation (must be retained 100% on-site) from extreme cloudbursts. Required by city council in all land-use planning since March 2024.
+                    </p>
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100 mb-4 text-xs text-slate-600">
+                        <i class="fa-solid fa-scale-balanced text-indigo-600 mr-1"></i> Statutory land-use mandate separating normal infiltration from emergency overland flow.
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Stadt Freiburg i.Br.</span>
+                    <a href="https://www.freiburg.de" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+                        <span>freiburg.de</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Empty State Container -->
+        <div id="no-results" class="hidden text-center py-16">
+            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 text-2xl">
+                <i class="fa-solid fa-filter-circle-xmark"></i>
+            </div>
+            <h4 class="font-heading font-bold text-slate-800 text-lg mb-1">No matching initiatives found</h4>
+            <p class="text-sm text-slate-500 mb-4">Try adjusting your search terms or clearing region filters.</p>
+            <button id="reset-search-btn" class="text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-4 py-2 rounded-lg border border-emerald-200 transition">
+                Reset All Filters
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-10 px-4 sm:px-6 lg:px-8 border-t border-slate-800 mt-12 text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <div class="font-heading font-bold text-white text-base mb-1">Basel Region Sponge & Adaptation Hub</div>
+                <p class="text-slate-500 max-w-md">
+                    Synthesizing real-world municipal strategies, pilot sponge sites, and public greening mandates across Basel-Stadt, Basel-Landschaft, and neighboring cross-border regions.
+                </p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-4 text-slate-300 font-medium">
+                <a href="https://map.geo.bs.ch" target="_blank" class="hover:text-emerald-400 transition">MapBS Surface Runoff Map</a>
+                <span>•</span>
+                <a href="https://www.stadtklima.bs.ch" target="_blank" class="hover:text-emerald-400 transition">Stadtklima BS</a>
+                <span>•</span>
+                <a href="https://www.baselland.ch" target="_blank" class="hover:text-emerald-400 transition">Kanton BL</a>
+                <span>•</span>
+                <a href="https://www.freiburg.de" target="_blank" class="hover:text-emerald-400 transition">Freiburg i.Br.</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('search-input');
+            const clearSearchBtn = document.getElementById('clear-search');
+            const cards = document.querySelectorAll('.initiative-card');
+            const visibleCountEl = document.getElementById('visible-count');
+            const noResultsEl = document.getElementById('no-results');
+            const resetSearchBtn = document.getElementById('reset-search-btn');
+            const mapHotspots = document.querySelectorAll('.map-hotspot');
+            const resetMapBtn = document.getElementById('reset-map-btn');
+            const activeTagIndicator = document.getElementById('active-tag-indicator');
+            const activeLocationName = document.getElementById('active-location-name');
+
+            let currentCategoryFilter = 'all';
+            let currentMapLocationFilter = null;
+            let currentSearchTerm = '';
+
+            // Main Filter Evaluation Engine
+            function filterCards() {
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const region = card.getAttribute('data-region');
+                    const type = card.getAttribute('data-type');
+                    const locations = (card.getAttribute('data-locations') || '').toLowerCase();
+                    const textContent = card.textContent.toLowerCase();
+
+                    // Check category/region button filter
+                    let matchesCategory = false;
+                    if (currentCategoryFilter === 'all') {
+                        matchesCategory = true;
+                    } else if (currentCategoryFilter === 'bs' && region === 'bs') {
+                        matchesCategory = true;
+                    } else if (currentCategoryFilter === 'agglo' && region === 'agglo') {
+                        matchesCategory = true;
+                    } else if (currentCategoryFilter === 'crossborder' && region === 'crossborder') {
+                        matchesCategory = true;
+                    } else if (currentCategoryFilter === 'sponge' && type === 'sponge') {
+                        matchesCategory = true;
+                    } else if (currentCategoryFilter === 'greenery' && type === 'greenery') {
+                        matchesCategory = true;
+                    }
+
+                    // Check map hotspot location filter
+                    let matchesLocation = true;
+                    if (currentMapLocationFilter) {
+                        const locTerm = currentMapLocationFilter.toLowerCase();
+                        matchesLocation = locations.includes(locTerm) || textContent.includes(locTerm);
+                    }
+
+                    // Check text search
+                    let matchesSearch = true;
+                    if (currentSearchTerm) {
+                        matchesSearch = textContent.includes(currentSearchTerm);
+                    }
+
+                    // Show/Hide Decision
+                    if (matchesCategory && matchesLocation && matchesSearch) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Update Counters & UI States
+                visibleCountEl.textContent = visibleCount;
+                if (visibleCount === 0) {
+                    noResultsEl.classList.remove('hidden');
+                } else {
+                    noResultsEl.classList.add('hidden');
+                }
+
+                // Show Map Filter Indicator
+                if (currentMapLocationFilter) {
+                    activeTagIndicator.classList.remove('hidden');
+                    activeLocationName.textContent = currentMapLocationFilter;
+                } else {
+                    activeTagIndicator.classList.add('hidden');
+                }
+            }
+
+            // Category Filter Buttons Listener
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('active', 'bg-emerald-600', 'text-white');
+                        b.classList.add('bg-white', 'text-slate-700');
+                    });
+                    btn.classList.add('active', 'bg-emerald-600', 'text-white');
+                    btn.classList.remove('bg-white', 'text-slate-700');
+
+                    currentCategoryFilter = btn.getAttribute('data-filter');
+                    filterCards();
+                });
+            });
+
+            // Live Search Listener
+            searchInput.addEventListener('input', (e) => {
+                currentSearchTerm = e.target.value.toLowerCase().trim();
+                clearSearchBtn.classList.toggle('hidden', currentSearchTerm === '');
+                filterCards();
+            });
+
+            clearSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                currentSearchTerm = '';
+                clearSearchBtn.classList.add('hidden');
+                filterCards();
+            });
+
+            resetSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                currentSearchTerm = '';
+                currentCategoryFilter = 'all';
+                currentMapLocationFilter = null;
+                
+                // Reset button states
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-emerald-600', 'text-white');
+                    b.classList.add('bg-white', 'text-slate-700');
+                });
+                document.querySelector('[data-filter="all"]').classList.add('active', 'bg-emerald-600', 'text-white');
+                
+                // Reset map pins
+                document.querySelectorAll('#basel-svg-map circle').forEach(c => c.classList.remove('map-pin-active'));
+
+                filterCards();
+            });
+
+            // Interactive SVG Map Pin Listener
+            mapHotspots.forEach(hotspot => {
+                hotspot.addEventListener('click', () => {
+                    const loc = hotspot.getAttribute('data-location');
+                    
+                    if (currentMapLocationFilter === loc) {
+                        // Toggle off if already selected
+                        currentMapLocationFilter = null;
+                        hotspot.querySelector('circle').classList.remove('map-pin-active');
+                    } else {
+                        // Highlight selected hotspot
+                        document.querySelectorAll('#basel-svg-map circle').forEach(c => c.classList.remove('map-pin-active'));
+                        hotspot.querySelector('circle').classList.add('map-pin-active');
+                        currentMapLocationFilter = loc;
+                    }
+
+                    filterCards();
+                });
+            });
+
+            // Map Reset Button
+            resetMapBtn.addEventListener('click', () => {
+                currentMapLocationFilter = null;
+                document.querySelectorAll('#basel-svg-map circle').forEach(c => c.classList.remove('map-pin-active'));
+                filterCards();
+            });
+        });
+    </script>
+</body>
+</html>

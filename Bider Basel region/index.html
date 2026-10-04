@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bider Basel region</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  html, body { margin: 0; height: 100%; }
+  body {
+    height: 100vh;
+    overflow: hidden;
+    color: #1c2430;
+    background: #e7eef2;
+    font-family: system-ui, "Segoe UI", sans-serif;
+  }
+  #stage {
+    height: 87vh;
+    box-sizing: border-box;
+    display: grid;
+    gap: 6px;
+    padding: 6px;
+    min-height: 0;
+  }
+  #stage[data-layout="1"] {
+    grid-template: "a" minmax(0, 1fr) / minmax(0, 1fr);
+  }
+  #stage[data-layout="2"] {
+    grid-template: "a b" minmax(0, 1fr) / minmax(0, 1fr) minmax(0, 1fr);
+  }
+  #stage[data-layout="3"] {
+    grid-template:
+      "a b" minmax(0, 1fr)
+      "a c" minmax(0, 1fr)
+      / minmax(0, 1fr) minmax(0, 1fr);
+  }
+  #stage[data-layout="1"] [data-slot="b"],
+  #stage[data-layout="1"] [data-slot="c"],
+  #stage[data-layout="2"] [data-slot="c"] { display: none; }
+  .tile {
+    grid-area: a;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #c9d3dc;
+    border-radius: 8px;
+    display: flex;
+  }
+  .tile[data-slot="b"] { grid-area: b; }
+  .tile[data-slot="c"] { grid-area: c; }
+  .tile > .mod-root { flex: 1 1 auto; min-width: 0; min-height: 0; }
+  .empty-tile {
+    margin: auto;
+    color: #5c6b7a;
+    font-size: 14px;
+    text-align: center;
+    padding: 12px;
+  }
+  #strip {
+    height: 13vh;
+    box-sizing: border-box;
+    display: flex;
+    gap: 8px;
+    padding: 6px;
+    background: #f7f4ee;
+    border-top: 1px solid #d9d0c2;
+    min-height: 0;
+    overflow: hidden;
+  }
+  #layout-menu {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: #fff;
+    border: 1px solid #1b1916;
+    border-radius: 8px;
+  }
+  #layout-menu .brand {
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  #layout-menu .menu-label {
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5c564c;
+  }
+  .lay {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1.5px solid #16324f;
+    background: #fff;
+    color: #16324f;
+    border-radius: 8px;
+    padding: 4px 6px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 12px;
+  }
+  .lay[aria-pressed="true"] { background: #16324f; color: #fff; }
+  .mini { width: 26px; height: 16px; display: grid; gap: 1px; }
+  .mini i { background: currentColor; display: block; }
+  .m1 { grid-template: 1fr / 1fr; }
+  .m2 { grid-template: 1fr / 1fr 1fr; }
+  .m3 { grid-template: 1fr 1fr / 1fr 1fr; }
+  .m3 i:first-child { grid-row: 1 / span 2; }
+  #strip-scroll {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .src {
+    flex: 0 0 300px;
+    min-width: 240px;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #1b1916;
+    border-radius: 8px;
+    padding: 4px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+  }
+  .src header { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .src h2 { margin: 0; font-size: 14px; }
+  .src .where { font-size: 11px; color: #5c564c; }
+  .src p { margin: 0; font-size: 12px; color: #3d4a5c; }
+  .pick { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pick button {
+    font: inherit;
+    font-size: 12px;
+    border: 1px solid #16324f;
+    background: #fff;
+    color: #16324f;
+    border-radius: 999px;
+    padding: 1px 7px;
+    cursor: pointer;
+  }
+  .pick button[aria-pressed="true"] { background: #16324f; color: #fff; }
+  #park { display: none; }
+</style>
+</head>
+<body>
+<header id="stage" data-layout="2">
+  <section class="tile" data-slot="a" aria-label="Tile A"></section>
+  <section class="tile" data-slot="b" aria-label="Tile B"></section>
+  <section class="tile" data-slot="c" aria-label="Tile C"></section>
+</header>
+<footer id="strip">
+  <div id="layout-menu">
+    <span class="brand">Bider Basel region</span>
+    <span class="menu-label">Layout</span>
+    <button type="button" class="lay" data-layout="1" aria-pressed="false">
+      <span class="mini m1" aria-hidden="true"><i></i></span>1 tile
+    </button>
+    <button type="button" class="lay" data-layout="2" aria-pressed="true">
+      <span class="mini m2" aria-hidden="true"><i></i><i></i></span>2 tiles
+    </button>
+    <button type="button" class="lay" data-layout="3" aria-pressed="false">
+      <span class="mini m3" aria-hidden="true"><i></i><i></i><i></i></span>3 tiles
+    </button>
+  </div>
+  <div id="strip-scroll">
+    <article class="src" data-mod="heatmap">
+      <header><h2>Heat map</h2><span class="where"></span></header>
+      <p>Heat zones and federal runoff. Gemeinde dropdown sits in the tile.</p>
+      <div class="pick"></div>
+    </article>
+    <article class="src" data-mod="initiatives">
+      <header><h2>Initiatives</h2><span class="where"></span></header>
+      <p>Programmes in and around Basel. Region dropdown sits in the tile.</p>
+      <div class="pick"></div>
+    </article>
+    <article class="src" data-mod="designer">
+      <header><h2>Design a street</h2><span class="where"></span></header>
+      <p>Toggle measures. The score is a count, not a climate result.</p>
+      <div class="pick"></div>
+    </article>
+  </div>
+</footer>
+<div id="park" hidden></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="modules/heat-data.js"></script>
+<script src="modules/places.js"></script>
+<script src="modules/layout.js"></script>
+<script src="modules/heatmap.js"></script>
+<script src="modules/initiatives.js"></script>
+<script src="modules/designer.js"></script>
+<script>
+(function () {
+  var assign = { a: "heatmap", b: "initiatives", c: null };
+  var stage = document.getElementById("stage");
+  var menuButtons = document.querySelectorAll("#layout-menu .lay");
+
+  function emptyTile() {
+    var p = document.createElement("p");
+    p.className = "empty-tile";
+    p.textContent = "Empty tile. Choose it from a box in the strip.";
+    return p;
+  }
+
+  function slotEl(key) {
+    return stage.querySelector('[data-slot="' + key + '"]');
+  }
+
+  function slotLabel(key) {
+    var choices = window.Bider.layout.choices();
+    for (var i = 0; i < choices.length; i++) {
+      if (choices[i].slot === key) return choices[i].label;
+    }
+    if (key === "a") return "Left";
+    if (key === "b") return "Right";
+    return "Right bottom";
+  }
+
+  function mountAll() {
+    var visible = window.Bider.layout.visible();
+    ["a", "b", "c"].forEach(function (key) {
+      var mod = assign[key];
+      if (mod && visible.indexOf(key) >= 0) {
+        window.Bider[mod].render(slotEl(key));
+      }
+    });
+    ["a", "b", "c"].forEach(function (key) {
+      var el = slotEl(key);
+      var shown = assign[key] && visible.indexOf(key) >= 0;
+      if (!shown) el.replaceChildren(emptyTile());
+    });
+    if (window.Bider.heatmap && window.Bider.heatmap.resize) {
+      requestAnimationFrame(function () { window.Bider.heatmap.resize(); });
+    }
+    paintStrip();
+  }
+
+  function place(mod, slot) {
+    Object.keys(assign).forEach(function (key) {
+      if (assign[key] === mod) assign[key] = null;
+    });
+    assign[slot] = mod;
+    mountAll();
+  }
+
+  function paintStrip() {
+    var choices = window.Bider.layout.choices();
+    var visible = window.Bider.layout.visible();
+    document.querySelectorAll(".src").forEach(function (card) {
+      var mod = card.getAttribute("data-mod");
+      var where = card.querySelector(".where");
+      var held = null;
+      Object.keys(assign).forEach(function (key) {
+        if (assign[key] === mod) held = key;
+      });
+      if (!held) where.textContent = "Not shown";
+      else if (visible.indexOf(held) >= 0) where.textContent = "Showing: " + slotLabel(held);
+      else where.textContent = "On " + slotLabel(held) + " when that layout is on";
+      var pick = card.querySelector(".pick");
+      pick.replaceChildren();
+      choices.forEach(function (choice) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = choice.label;
+        btn.setAttribute("aria-pressed", held === choice.slot ? "true" : "false");
+        btn.addEventListener("click", function (event) {
+          event.stopPropagation();
+          place(mod, choice.slot);
+        });
+        pick.appendChild(btn);
+      });
+    });
+    menuButtons.forEach(function (btn) {
+      btn.setAttribute("aria-pressed", String(window.Bider.layout.get()) === btn.getAttribute("data-layout") ? "true" : "false");
+    });
+  }
+
+  document.querySelectorAll(".src").forEach(function (card) {
+    card.addEventListener("click", function () {
+      var mod = card.getAttribute("data-mod");
+      var visible = window.Bider.layout.visible();
+      var already = Object.keys(assign).some(function (key) {
+        return assign[key] === mod && visible.indexOf(key) >= 0;
+      });
+      if (already) return;
+      var choices = window.Bider.layout.choices();
+      var target = choices[0].slot;
+      for (var i = 0; i < choices.length; i++) {
+        if (!assign[choices[i].slot]) { target = choices[i].slot; break; }
+      }
+      place(mod, target);
+    });
+  });
+
+  menuButtons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      window.Bider.layout.set(btn.getAttribute("data-layout"));
+    });
+  });
+
+  window.Bider.layout.onChange(function () { mountAll(); });
+  window.Bider.layout.init(stage);
+  mountAll();
+})();
+</script>
+</body>
+</html>
